@@ -26,6 +26,18 @@ import {
   SkyDropdownModule
 } from '@skyux/popovers/modules/dropdown';
 
+import {
+  SkyListModule
+} from '@skyux/list-builder';
+
+import {
+  SkyListViewGridModule
+} from '@skyux/list-builder-view-grids';
+
+import {
+  SkyGridModule
+} from '@skyux/grids';
+
 @NgModule({
   imports: [
     SkyDropdownModule,
@@ -33,7 +45,10 @@ import {
     SkyInfiniteScrollModule,
     SkyPagingModule,
     SkyRepeaterModule,
-    SkySortModule
+    SkySortModule,
+    SkyListModule,
+    SkyGridModule,
+    SkyListViewGridModule
   ],
   exports: [
     SkyDropdownModule,
@@ -41,7 +56,10 @@ import {
     SkyInfiniteScrollModule,
     SkyPagingModule,
     SkyRepeaterModule,
-    SkySortModule
+    SkySortModule,
+    SkyListModule,
+    SkyGridModule,
+    SkyListViewGridModule
   ],
   providers: [],
   entryComponents: []

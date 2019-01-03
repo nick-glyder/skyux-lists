@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 
 import 'rxjs/add/operator/takeWhile';
+import 'rxjs/add/operator/finally';
 
 import {
   SkyInfiniteScrollDomAdapterService
@@ -28,8 +29,32 @@ import {
   ]
 })
 export class SkyInfiniteScrollComponent implements OnInit, OnDestroy {
+  private _enabled = false;
+  public get enabled() {
+    return this._enabled;
+  }
   @Input()
-  public enabled = false;
+  public set enabled(enable: boolean) {
+    if (this._enabled === false && enable === true) {
+      // The user has scrolled to the infinite scroll element.
+      this.domAdapter.scrollTo(this.elementRef)
+        .takeWhile(() => this.enabled)
+        .subscribe(() => {
+          if (!this.isWaiting) {
+            this.notifyScrollEnd();
+          }
+        });
+      // New items have been loaded into the parent element.
+      this.domAdapter.parentChanges(this.elementRef)
+        .finally(() => this.isWaiting = false)
+        .takeWhile(() => this.enabled)
+        .subscribe(() => {
+          this.isWaiting = false;
+          this.changeDetector.markForCheck();
+        });
+    }
+    this._enabled = enable;
+  }
 
   @Output()
   public scrollEnd = new EventEmitter<void>();
@@ -42,24 +67,7 @@ export class SkyInfiniteScrollComponent implements OnInit, OnDestroy {
     private domAdapter: SkyInfiniteScrollDomAdapterService
   ) { }
 
-  public ngOnInit(): void {
-    // The user has scrolled to the infinite scroll element.
-    this.domAdapter.scrollTo(this.elementRef)
-      .takeWhile(() => this.enabled)
-      .subscribe(() => {
-        if (!this.isWaiting) {
-          this.notifyScrollEnd();
-        }
-      });
-
-    // New items have been loaded into the parent element.
-    this.domAdapter.parentChanges(this.elementRef)
-      .takeWhile(() => this.enabled)
-      .subscribe(() => {
-        this.isWaiting = false;
-        this.changeDetector.markForCheck();
-      });
-  }
+  public ngOnInit(): void {}
 
   public ngOnDestroy(): void {
     this.enabled = false;

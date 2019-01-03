@@ -1,83 +1,11 @@
-<div
-  class="app-screenshot"
-  id="screenshot-infinite-scroll"
->
-  <sky-repeater>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 1
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 1
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 2
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 2
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-  </sky-repeater>
-  <sky-infinite-scroll
-    [enabled]="true"
-  >
-  </sky-infinite-scroll>
-</div>
-
-<div
-  class="app-screenshot"
-  id="screenshot-infinite-scroll-nobutton"
->
-  <sky-repeater>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 1
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 1
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 2
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 2
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-  </sky-repeater>
-  <sky-infinite-scroll
-    [enabled]="false"
-  >
-  </sky-infinite-scroll>
-</div>
-
-<div
-  class="app-screenshot"
-  id="screenshot-infinite-scroll-wait"
->
-  <sky-repeater>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 1
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 1
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-    <sky-repeater-item>
-      <sky-repeater-item-title>
-        Title 2
-      </sky-repeater-item-title>
-      <sky-repeater-item-content>
-        Content 2
-      </sky-repeater-item-content>
-    </sky-repeater-item>
-  </sky-repeater>
-  <sky-infinite-scroll
-    [enabled]="true"
-  >
+<h3>List demo:</h3>
+<button type="button" (click)="turnOn()">Re-Enable</button>
+<div class="sky-infinite-scroll-demo">
+  <sky-list [data]="listItems">
+    <sky-list-view-grid fit="scroll">
+      <sky-grid-column field="name" heading="Name"></sky-grid-column>
+    </sky-list-view-grid>
+  </sky-list>
+  <sky-infinite-scroll [enabled]="listHasMore" (scrollEnd)="onListScrollEnd()">
   </sky-infinite-scroll>
 </div>
